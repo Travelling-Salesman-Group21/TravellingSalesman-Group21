@@ -9,19 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
+        python-version: ["3.12"]
         pip-installs: ["pip --upgrade", "torch"]
-      
     
     steps:
       # getting git code base
       - uses: actions/checkout@v4
 
-      - name: Setup Python Environment
+      # Installing python Environment
+      - name: Setup Python Environment ${{ python version}}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ python-version}}
+
+      # Installing project Dependencies
       - name: Installing Dependencies
-        run: pip install
+        run: python -m pip install ${{ matrix.pip-installs }}
+
+      # Running Code
       - name: Running code
         run: python main.py
     
