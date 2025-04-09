@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        python-version: ["3.12"]
         pip-installs: ["pip --upgrade", "torch"]
     
     steps:
@@ -17,10 +16,10 @@ jobs:
       - uses: actions/checkout@v4
 
       # Installing python Environment
-      - name: Setup Python Environment ${{ python-version }}
+      - name: Setup Python Environment
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ python-version}}
+          python-version: "3.12"
 
       # Installing project Dependencies
       - name: Installing Dependencies
