@@ -1,1 +1,30 @@
+name: Travelling Salesman - Group 21
 
+on:
+  push: 
+    branches: ["main", "dev"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        pip-installs: ["pip --upgrade", "torch"]
+      
+    
+    steps:
+      # getting git code base
+      - uses: actions/checkout@v4
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installing Dependencies
+        run: pip install
+      - name: Running code
+        run: python main.py
+    
+    
+  
+  
