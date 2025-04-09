@@ -7,10 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix: 
         
-    
     steps:
       # getting git code base
       - uses: actions/checkout@v4
