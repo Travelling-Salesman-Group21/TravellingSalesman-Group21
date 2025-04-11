@@ -7,10 +7,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os-version: [windoew-latest, ubuntu-latest, macos-latest]
+        os-version: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os-version }}
         
     steps:
       # getting git code base
