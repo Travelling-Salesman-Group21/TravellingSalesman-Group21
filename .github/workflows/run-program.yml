@@ -3,10 +3,14 @@ name: Travelling Salesman - Group 21
 on:
   push: 
     branches: ["main", "dev"]
+    
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os-version: [windoew-latest, ubuntu-latest, macos-latest]
         
     steps:
       # getting git code base
