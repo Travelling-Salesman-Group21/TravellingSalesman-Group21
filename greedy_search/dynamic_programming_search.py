@@ -22,7 +22,7 @@ class DynamicProgrammingSearch:
             temp_path:list[int] = copy.deepcopy(search_path)
             temp_path.append(node)
             next_cost:float = self.cost_table[temp_path[-1]][node] + current_cost
-            get_result = self.dynamic_search(temp_path, next_cost, node)
+            get_result:tuple[list[int], float] = self.dynamic_search(temp_path, next_cost, node)
             temp_path:list[int] = get_result[0]
             temp_cost:float = get_result[1]
             if temp_cost < best_cost:
