@@ -11,7 +11,7 @@ class DynamicProgrammingSearch:
 
         # Base Case
         if len(search_path) == len(self.cost_table):
-            best_cost = self.cost_table[search_path[-1]][self.start_location] + current_cost
+            best_cost:float = self.cost_table[search_path[-1]][self.start_location] + current_cost
             best_path.append(self.start_location)
             return best_path, best_cost
 
@@ -26,12 +26,12 @@ class DynamicProgrammingSearch:
             temp_path:list[int] = get_result[0]
             temp_cost:float = get_result[1]
             if temp_cost < best_cost:
-                best_path = temp_path
-                best_cost = temp_cost
+                best_path:list[int] = temp_path
+                best_cost:float = temp_cost
         return best_path, best_cost
 
 def main():
-    dpn = DynamicProgrammingSearch(cost, 0)
+    dpn:DynamicProgrammingSearch = DynamicProgrammingSearch(cost, 0)
     dpn.dynamic_search([0], 0.0, 0)
 
 if __name__ == '__main__':
