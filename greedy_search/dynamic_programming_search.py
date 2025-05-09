@@ -1,6 +1,6 @@
 import copy
 class DynamicProgrammingSearch:
-    def __init__(self, problem, start_location):
+    def __init__(self, problem:list[list[int]], start_location: int) -> None:
         self.cost_table:list[list[float]] = problem
         self.start_location:int = start_location
 
