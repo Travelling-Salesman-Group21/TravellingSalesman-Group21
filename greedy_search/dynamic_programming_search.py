@@ -21,9 +21,6 @@ class DynamicProgrammingSearch:
                 continue
             temp_path:list[int] = copy.deepcopy(search_path)
             temp_path.append(node)
-            for x in temp_path:
-                print(x)
-            print("--------")
             next_cost:float = self.cost_table[temp_path[-1]][node] + current_cost
             get_result = self.dynamic_search(temp_path, next_cost, node)
             temp_path:list[int] = get_result[0]
@@ -31,8 +28,6 @@ class DynamicProgrammingSearch:
             if temp_cost < best_cost:
                 best_path = temp_path
                 best_cost = temp_cost
-            print(f"cost:{temp_cost}\n")
-            print("--------")
         return best_path, best_cost
 
 def main():
