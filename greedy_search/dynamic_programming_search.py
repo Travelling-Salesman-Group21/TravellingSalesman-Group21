@@ -61,11 +61,6 @@ class DynamicProgrammingSearch:
         # returning the result to the next down in the stack
         return best_path, best_cost
 
-def main():
-    dpn:DynamicProgrammingSearch = DynamicProgrammingSearch(cost, 0)
-    dpn.print_results()
-    print(dpn.output_results())
-
 if __name__ == '__main__':
     cost = [
         [0, 3, 2, 5],
@@ -73,5 +68,11 @@ if __name__ == '__main__':
         [2, 3, 0, 4],
         [3, 4, 2, 0]
     ]
+
+    def main():
+        dpn: DynamicProgrammingSearch = DynamicProgrammingSearch(cost, 0)
+        dpn.print_results()
+        print(dpn.output_results())
     main()
+
     del cost
