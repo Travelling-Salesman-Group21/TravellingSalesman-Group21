@@ -48,11 +48,14 @@ class DynamicProgrammingSearch:
         # Each Path
         for node in range(len(self._cost_table)):
             """ to search the cost of each node then the cost of their children till all paths are searched """
-            if node == curr_node or node in search_path: # skipping this loop if attempting to find the cost of node going to it's self
+            next_cost:float = current_cost + self._cost_table[search_path[-1]][node]
+            # skipping this loop if attempting to find the cost of node going to it's self,
+            # the node has been searched for already in this branch, or
+            # the next node can't possibly be better than what has been found already
+            if node == curr_node or node in search_path or next_cost >= best_cost:
                 continue
             # copying due to each time the method is called needing a separate array otherwise they all over write each other
             temp_path:list[int] = copy.deepcopy(search_path)
-            next_cost:float = self._cost_table[temp_path[-1]][node] + current_cost
             temp_path.append(node)
             get_result:tuple[list[int], float] = self._dynamic_search(temp_path, next_cost, node) # point of recursion
             if get_result[1] < best_cost and temp_path[-1] != self._start_location:
