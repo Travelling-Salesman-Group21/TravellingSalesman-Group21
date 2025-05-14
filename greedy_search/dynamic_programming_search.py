@@ -5,6 +5,7 @@ Branch & Prune Method
 
 WARNING: Number of points Above about 10 may turn computer into Heater for quite a while
 This algorithm has The Worst Case Time Complexity: O(N!)
+Also has The Worst Case Space Complexity: O(N!)
 YOu have been WARNED
 
 - Searches all nodes connected to the current node to get cost
