@@ -134,14 +134,11 @@ if __name__ == '__main__':
         # Results of return value
         print(f"Tuple Format\n%s" % str(dpn.output_results()))
 
-        # JUST PARANOIA
-        # making sure all the references are deleted from the environment so they don't pollute memory
-        del low_point, high_point, point_count, start  # variables
-
     # Starting the run
     main()
 
     # JUST PARANOIA
     # making sure all the references are deleted from the environment so they don't pollute memory
+    del low_point, high_point, point_count, start # variables
     del main, DynamicProgrammingSearch # methods, classes
     del random, copy, math # imports
