@@ -1,9 +1,33 @@
-""" To do a recursive Dynamic Programming solution to the Travelling Salesman Problem"""
+"""
+Travelling Salesman Problem
+To do a recursive Dynamic Programming solution
+Branch & Prune Method
+
+WARNING: Number of points Above about 10 may turn computer into Heater for quite a while
+This algorithm has The Worst Case Time Complexity: O(N!)
+YOu have been WARNED
+
+- Searches all nodes connected to the current node to get cost
+    - if the next node is not a leaf node
+        - the cost cannot be determined
+        - if the cost to reach a child node is greater than the upper bound
+            - that node is skipped
+        - the child nodes need to be queried and the total cost to get to them needs to be calculated
+        - the process repeats until it reaches a leaf node
+    - if the next node is a leaf node
+        - the total cost to get to that node is calculated
+        - the total cost is returned back up the tree.
+        - when receiving a total cost from a child node
+            - the total cost is lower than the previous upper bound
+"""
+
 import copy # to deep copy arrays
+import math
+
 
 class DynamicProgrammingSearch:
     """ Class to solve the Travelling Salesman Problem using Dynamic Programming """
-    def __init__(self, problem:list[list[int]], start_location: int) -> None:
+    def __init__(self, problem:list[list[float]], start_location: int) -> None:
         """ Initializing Class with the required fields"""
         # Constant Fields
         self._cost_table:list[list[float]] = problem
@@ -62,17 +86,58 @@ class DynamicProgrammingSearch:
         return best_path, best_cost
 
 if __name__ == '__main__':
-    cost = [
-        [0, 3, 2, 5],
-        [1, 0, 3, 2],
-        [2, 3, 0, 4],
-        [3, 4, 2, 0]
-    ]
+    import random
+
+    low_point:int = random.randint(-100, -1)
+    high_point:int = random.randint(1, 100)
+    point_count:int = random.randint(2, 15)
+
+    def generate_points(low:int, high:int, point_num:int) -> list[list[float]]:
+        """ Generating list of 2D Cartesian points """
+        locations:list[tuple[float, float]] = [
+            (random.randint(low, high),
+             random.randint(low, high)
+             ) for _ in range(point_num)
+        ]
+
+        cost_list:list[list[float]] = []
+        for location in locations:
+            each_cost:list[float] = []
+            each_cost.extend(
+                math.sqrt(
+                    (location[0]-destination[0])**2
+                    +(location[1]-destination[1])**2
+                ) for destination in locations
+            )
+            cost_list.append(each_cost)
+        return cost_list
 
     def main():
-        dpn: DynamicProgrammingSearch = DynamicProgrammingSearch(cost, 0)
+        # Running Code
+        dpn: DynamicProgrammingSearch = DynamicProgrammingSearch(
+                                            problem=generate_points(
+                                                            low=low_point,
+                                                            high=high_point,
+                                                            point_num=point_count
+                                                            ),
+                                            start_location=0
+        )
+
+        # Printing Things
+        # Attributes of the problem
+        print("Lowest Axis Coordinate: %i" % low_point)
+        print("Highest Axis Coordinate: %i" % high_point)
+        print("Number of points: %i" % point_count)
+        # Results
         dpn.print_results()
-        print(dpn.output_results())
+        # Results of return value
+        print(f"Tuple Format\n%s" % str(dpn.output_results()))
+
+    # Starting the run
     main()
 
-    del cost
+    # JUST PARANOIA
+    # making sure all the references are deleted from the environment so they don't pollute memory
+    del low_point, high_point, point_count # variables
+    del main, DynamicProgrammingSearch # methods, classes
+    del random, copy, math # imports
