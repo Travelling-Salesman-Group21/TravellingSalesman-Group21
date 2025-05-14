@@ -91,6 +91,7 @@ if __name__ == '__main__':
     low_point:int = random.randint(-100, -1)
     high_point:int = random.randint(1, 100)
     point_count:int = random.randint(2, 15)
+    start:int = random.randint(0, point_count - 1)
 
     def generate_points(low:int, high:int, point_num:int) -> list[list[float]]:
         """ Generating list of 2D Cartesian points """
@@ -120,7 +121,7 @@ if __name__ == '__main__':
                                                             high=high_point,
                                                             point_num=point_count
                                                             ),
-                                            start_location=0
+                                            start_location=start
         )
 
         # Printing Things
