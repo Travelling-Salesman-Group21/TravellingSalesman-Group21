@@ -74,6 +74,9 @@ class DynamicProgrammingSearch:
         for node in range(len(self._cost_table)):
             """ to search the cost of each node then the cost of their children till all paths are searched """
             next_cost:float = self._cost_table[search_path[-1]][node] + current_cost
+            # skipping this loop if attempting to find the cost of node going to it's self,
+            # the node has been searched for already in this branch, or
+            # the next node can't possibly be better than what has been found already
             if node == curr_node or node in search_path or next_cost >= best_cost: # skipping this loop if attempting to find the cost of node going to it's self
                 continue
             # copying due to each time the method is called needing a separate array otherwise they all over write each other
