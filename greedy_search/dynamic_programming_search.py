@@ -24,6 +24,10 @@ YOu have been WARNED
 
 import copy # to deep copy arrays
 import math
+import timeit
+
+import matplotlib.pyplot
+import seaborn
 
 
 class DynamicProgrammingSearch:
@@ -92,10 +96,10 @@ class DynamicProgrammingSearch:
 if __name__ == '__main__':
     import random
 
-    low_point:int = random.randint(-100, -1)
-    high_point:int = random.randint(1, 100)
-    point_count:int = random.randint(2, 15)
-    start:int = random.randint(0, point_count - 1)
+    low_point:int = 10000
+    high_point:int = 10000
+    point_count:int = 991 # max 991
+    start:int = 0
 
     def generate_points(low:int, high:int, point_num:int) -> list[list[float]]:
         """ Generating list of 2D Cartesian points """
@@ -117,32 +121,43 @@ if __name__ == '__main__':
             cost_list.append(each_cost)
         return cost_list
 
-    def main():
+    def main(num:int) -> None:
         # Running Code
-        dpn: DynamicProgrammingSearch = DynamicProgrammingSearch(
-                                            problem=generate_points(
-                                                            low=low_point,
-                                                            high=high_point,
-                                                            point_num=point_count
-                                                            ),
-                                            start_location=start
+        point_map:list[list[float]] = generate_points(
+                low=low_point,
+                high=high_point,
+                point_num=num
+                )
+        start_time: float = timeit.default_timer()
+        DynamicProgrammingSearch(
+            problem=point_map,
+            start_location=start
         )
-
-        # Printing Things
-        # Attributes of the problem
-        print("Lowest Axis Coordinate: %i" % low_point)
-        print("Highest Axis Coordinate: %i" % high_point)
-        print("Number of points: %i" % point_count)
-        # Results
-        dpn.print_results()
-        # Results of return value
-        print(f"Tuple Format\n%s" % str(dpn.output_results()))
+        end_time: float = timeit.default_timer()
+        times[each]: dict[int, float] = end_time - start_time
 
     # Starting the run
-    main()
+    times: dict[int, float] = {}
+    total_time_start:float = timeit.default_timer()
+    for each in range(1, point_count):
+        main(each)
+        print("Iter:", each)
+        # if total_time_start - timeit.default_timer() > 420:
+        #     break
+
+    total_time_end: float = timeit.default_timer()
+    total_time:float = total_time_end - total_time_start
+
+    print(times)
+    print("Time Taken:", total_time, "Node Count", point_count)
+    seaborn.lineplot(data=times)
+    matplotlib.pyplot.xlabel("Node Count")
+    matplotlib.pyplot.ylabel("Time (s)")
+    matplotlib.pyplot.title("Brute Force Time Taken")
+    matplotlib.pyplot.show()
 
     # JUST PARANOIA
     # making sure all the references are deleted from the environment so they don't pollute memory
-    del low_point, high_point, point_count, start # variables
+    del low_point, high_point, point_count, start, total_time_start, total_time_end, total_time # variables
     del main, DynamicProgrammingSearch # methods, classes
     del random, copy, math # imports
