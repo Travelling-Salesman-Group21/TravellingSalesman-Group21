@@ -4,7 +4,7 @@ import random
 import matplotlib.pyplot as plt
 
 
-def generate_points(low: int, high: int, point_num: int) -> list[list[float]]:
+def generate_points(low: int, high: int, point_num: int) -> tuple[list[tuple[float, float]], list[list[float]]]:
     """Generate a cost matrix for 2D Cartesian points."""
     random.seed(42)  # For reproducibility
     locations: list[tuple[float, float]] = [
@@ -64,6 +64,8 @@ if __name__ == "__main__":
     initial_tour: list[int] = list(range(point_num))
     random.shuffle(initial_tour)
     optimized_tour: list[int] = two_opt(initial_tour, cost_matrix)
+
+    # Printing results
     print("Lowest Axis Coordinate: %i" % low_point)
     print("Highest Axis Coordinate: %i" % high_point)
     print("Number of points: %i" % point_num)
