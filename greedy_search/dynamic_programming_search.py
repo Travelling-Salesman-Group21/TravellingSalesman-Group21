@@ -23,12 +23,6 @@ YOu have been WARNED
 """
 
 import copy # to deep copy arrays
-import math
-import timeit
-
-import matplotlib.pyplot
-import seaborn
-
 
 class DynamicProgrammingSearch:
     """ Class to solve the Travelling Salesman Problem using Dynamic Programming """
@@ -92,72 +86,3 @@ class DynamicProgrammingSearch:
                 best_cost: float = get_result[1]
         # returning the result to the next down in the stack
         return best_path, best_cost
-
-if __name__ == '__main__':
-    import random
-
-    low_point:int = 10000
-    high_point:int = 10000
-    point_count:int = 991 # max 991
-    start:int = 0
-
-    def generate_points(low:int, high:int, point_num:int) -> list[list[float]]:
-        """ Generating list of 2D Cartesian points """
-        locations:list[tuple[float, float]] = [
-            (random.randint(low, high),
-             random.randint(low, high)
-             ) for _ in range(point_num)
-        ]
-
-        cost_list:list[list[float]] = []
-        for location in locations:
-            each_cost:list[float] = []
-            each_cost.extend(
-                math.sqrt(
-                    (location[0]-destination[0])**2
-                    +(location[1]-destination[1])**2
-                ) for destination in locations
-            )
-            cost_list.append(each_cost)
-        return cost_list
-
-    def main(num:int) -> None:
-        # Running Code
-        point_map:list[list[float]] = generate_points(
-                low=low_point,
-                high=high_point,
-                point_num=num
-                )
-        start_time: float = timeit.default_timer()
-        DynamicProgrammingSearch(
-            problem=point_map,
-            start_location=start
-        )
-        end_time: float = timeit.default_timer()
-        times[each]: dict[int, float] = end_time - start_time
-
-    # Starting the run
-    times: dict[int, float] = {}
-    total_time_start:float = timeit.default_timer()
-    for each in range(1, point_count):
-        main(each)
-        print("Iter:", each)
-        # if total_time_start - timeit.default_timer() > 420:
-        #     break
-
-    total_time_end: float = timeit.default_timer()
-    total_time:float = total_time_end - total_time_start
-
-    print(times)
-    print("Time Taken:", total_time, "Node Count", point_count)
-    seaborn.lineplot(data=times)
-    matplotlib.pyplot.xlabel("Node Count")
-    matplotlib.pyplot.ylabel("Time (s)")
-    matplotlib.pyplot.title("Brute Force Time Taken")
-    matplotlib.pyplot.show()
-
-    # JUST PARANOIA
-    # making sure all the references are deleted from the environment so they don't pollute memory
-    del low_point, high_point, point_count, start, total_time_start, total_time_end, total_time # variables
-    del main, DynamicProgrammingSearch # methods, classes
-    del random, copy, math # imports
